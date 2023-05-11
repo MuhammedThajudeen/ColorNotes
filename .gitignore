@@ -45,7 +45,6 @@ app.*.map.json
 
 # Miscellaneous
 *.class
-*.lock
 *.log
 *.pyc
 *.swp

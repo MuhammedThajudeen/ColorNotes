@@ -57,7 +57,7 @@ class _NoteViewState extends State<NoteView> {
                                 child: Text('NO')),
                             TextButton(
                                 onPressed: () {
-                                  db.deleteAt(note.key);
+                                  db.delete(note.key);
                                   Navigator.pop(context);
                                   Navigator.pop(context);
                                 },
@@ -116,7 +116,7 @@ class _NoteViewState extends State<NoteView> {
   }
 
   void handlebackbutton() {
-    db.putAt(
+    db.put(
         note.key,
         Note(
             title: _titlecontroller.text.trim(),

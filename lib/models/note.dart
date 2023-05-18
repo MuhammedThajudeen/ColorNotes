@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'package:hive_flutter/hive_flutter.dart';
 part 'note.g.dart';
 
@@ -13,7 +12,14 @@ class Note extends HiveObject {
   @HiveField(3)
   int colorIndex;
 
-  Note({required this.title, required this.content, required this.colorIndex});
+  @HiveField(4)
+  DateTime datentime;
+
+  Note(
+      {required this.title,
+      required this.content,
+      required this.colorIndex,
+      required this.datentime});
 }
 
 final db = Hive.box<Note>('notedb');

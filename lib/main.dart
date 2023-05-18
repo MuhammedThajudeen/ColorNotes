@@ -1,7 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-
-import 'dart:math';
-
 import 'package:colornotes/models/note.dart';
 import 'package:colornotes/screens/homescreen.dart';
 import 'package:flutter/material.dart';

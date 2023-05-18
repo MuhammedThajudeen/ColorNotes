@@ -1,12 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:math';
-
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, camel_case_types
 import 'package:colornotes/models/note.dart';
-import 'package:colornotes/screens/noteeditscreen.dart';
 import 'package:colornotes/screens/noteviewscreen.dart';
 import 'package:colornotes/style/appstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class noteCard extends StatelessWidget {
   const noteCard({super.key, required this.note});
@@ -30,7 +27,7 @@ class noteCard extends StatelessWidget {
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
             color: Appstyle.cardcolor[note.colorIndex],
-            borderRadius: BorderRadius.circular(8)),
+            borderRadius: BorderRadius.circular(12)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -42,11 +39,18 @@ class noteCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 )),
             SizedBox(
-              height: 5,
+              height: 3,
+            ),
+            Text(
+              DateFormat("dd MMM yyyy").format(DateTime.now()).toString(),
+              style: TextStyle(fontSize: 11.5),
+            ),
+            SizedBox(
+              height: 6,
             ),
             Text(
               note.content,
-              maxLines: 4,
+              maxLines: 7,
               overflow: TextOverflow.ellipsis,
             )
           ],

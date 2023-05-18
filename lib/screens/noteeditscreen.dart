@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:colornotes/models/note.dart';
 
 class NoteEdit extends StatefulWidget {
-  NoteEdit({super.key});
+  const NoteEdit({super.key});
   @override
   State<NoteEdit> createState() => _NoteEditState();
 }
@@ -19,7 +19,7 @@ class _NoteEditState extends State<NoteEdit> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    //
 
     _titlecontroller.dispose();
     _notecontroller.dispose();
@@ -28,66 +28,74 @@ class _NoteEditState extends State<NoteEdit> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Appstyle.cardcolor[colorindexx],
-      appBar: AppBar(
-          centerTitle: true,
-          leading: IconButton(
-              onPressed: () {
-                handlebackbutton();
-              },
-              icon: Icon(Icons.arrow_back)),
-          elevation: 5,
-          backgroundColor: Appstyle.cardcolor[colorindexx],
-          iconTheme: IconThemeData(color: Colors.black),
-          title: Text(
-            'Add a new Note',
-            style: TextStyle(color: Colors.black),
-          )),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            TextField(
-              textCapitalization: TextCapitalization.sentences,
-              style: Appstyle.titletext,
-              maxLines: 1,
-              maxLength: 31,
-              controller: _titlecontroller,
-              decoration: InputDecoration(
-                  hintText: 'Title',
-                  hintStyle: Appstyle.titletext,
-                  border: InputBorder.none),
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Expanded(
-              child: TextField(
-                style: Appstyle.contenttext,
-                maxLines: null,
-                controller: _notecontroller,
+    return WillPopScope(
+      onWillPop: () {
+        return handlebackbutton();
+      },
+      child: Scaffold(
+        backgroundColor: Appstyle.cardcolor[colorindexx],
+        appBar: AppBar(
+            centerTitle: true,
+            leading: IconButton(
+                onPressed: () {
+                  handlebackbutton();
+                },
+                icon: Icon(Icons.arrow_back)),
+            elevation: 5,
+            backgroundColor: Appstyle.cardcolor[colorindexx],
+            iconTheme: IconThemeData(color: Colors.black),
+            title: Text(
+              'Add a new Note',
+              style: TextStyle(color: Colors.black),
+            )),
+        body: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              TextField(
+                textCapitalization: TextCapitalization.sentences,
+                style: Appstyle.titletext,
+                maxLines: 1,
+                maxLength: 31,
+                controller: _titlecontroller,
                 decoration: InputDecoration(
-                    hintText: 'Note',
-                    hintStyle: Appstyle.contenttext,
+                    hintText: 'Title',
+                    hintStyle: Appstyle.titletext,
                     border: InputBorder.none),
               ),
-            )
-          ],
+              SizedBox(
+                height: 6,
+              ),
+              Expanded(
+                child: TextField(
+                  textCapitalization: TextCapitalization.sentences,
+                  style: Appstyle.contenttext,
+                  maxLines: null,
+                  controller: _notecontroller,
+                  decoration: InputDecoration(
+                      hintText: 'Note',
+                      hintStyle: Appstyle.contenttext,
+                      border: InputBorder.none),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void handlebackbutton() {
+  handlebackbutton() {
     if (_titlecontroller.text.isEmpty && _notecontroller.text.isEmpty) {
       Navigator.pop(context);
     } else {
       db.add(Note(
           title: _titlecontroller.text.trim(),
           content: _notecontroller.text.trim(),
-          colorIndex: colorindexx));
+          colorIndex: colorindexx,
+          datentime: DateTime.now()));
+
       Navigator.pop(context);
     }
   }

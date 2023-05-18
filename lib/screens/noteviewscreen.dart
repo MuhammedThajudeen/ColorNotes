@@ -1,12 +1,9 @@
 // ignore_for_file: prefer_const_constructors, no_logic_in_create_state
 
-import 'dart:math';
-
-import 'package:colornotes/screens/homescreen.dart';
 import 'package:colornotes/style/appstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:colornotes/models/note.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart';
 
 class NoteView extends StatefulWidget {
   const NoteView({super.key, required this.notee, required this.colorid});
@@ -23,9 +20,12 @@ class _NoteViewState extends State<NoteView> {
   final _titlecontroller = TextEditingController();
   final _notecontroller = TextEditingController();
 
+  late String titletemp;
+  late String contenttemp;
+
   @override
   void dispose() {
-    // TODO: implement dispose
+    //
 
     _titlecontroller.dispose();
     _notecontroller.dispose();
@@ -38,90 +38,109 @@ class _NoteViewState extends State<NoteView> {
   Widget build(BuildContext context) {
     _titlecontroller.text = note.title;
     _notecontroller.text = note.content;
-    return Scaffold(
-      backgroundColor: Appstyle.cardcolor[note.colorIndex],
-      appBar: AppBar(
-          actions: [
-            IconButton(
+    titletemp = note.title;
+    contenttemp = note.content;
+    return WillPopScope(
+      onWillPop: () {
+        return handlebackbutton();
+      },
+      child: Scaffold(
+        backgroundColor: Appstyle.cardcolor[note.colorIndex],
+        appBar: AppBar(
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Are you sure want to delete?'),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('NO')),
+                              TextButton(
+                                  onPressed: () {
+                                    db.delete(note.key);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('YES'))
+                            ],
+                          );
+                        });
+                  },
+                  icon: Icon(Icons.delete))
+            ],
+            centerTitle: true,
+            leading: IconButton(
                 onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Are you sure want to delete?'),
-                          actions: [
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text('NO')),
-                            TextButton(
-                                onPressed: () {
-                                  db.delete(note.key);
-                                  Navigator.pop(context);
-                                  Navigator.pop(context);
-                                },
-                                child: Text('YES'))
-                          ],
-                        );
-                      });
+                  handlebackbutton();
                 },
-                icon: Icon(Icons.delete))
-          ],
-          centerTitle: true,
-          leading: IconButton(
-              onPressed: () {
-                handlebackbutton();
-              },
-              icon: Icon(Icons.arrow_back)),
-          elevation: 5,
-          backgroundColor: Appstyle.cardcolor[note.colorIndex],
-          iconTheme: IconThemeData(color: Colors.black),
-          title: Text(
-            'Your Note',
-            style: TextStyle(color: Colors.black),
-          )),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              textCapitalization: TextCapitalization.sentences,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Title',
-                hintStyle: Appstyle.titletext,
-              ),
-              controller: _titlecontroller,
-              style: Appstyle.titletext,
-            ),
-            SizedBox(
-              height: 6,
-            ),
-            Expanded(
-              child: TextField(
-                maxLines: null,
+                icon: Icon(Icons.arrow_back)),
+            elevation: 5,
+            backgroundColor: Appstyle.cardcolor[note.colorIndex],
+            iconTheme: IconThemeData(color: Colors.black),
+            title: Text(
+              'Your Note',
+              style: TextStyle(color: Colors.black),
+            )),
+        body: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
                 textCapitalization: TextCapitalization.sentences,
-                controller: _notecontroller,
                 decoration: InputDecoration(
-                    hintText: 'Note',
-                    hintStyle: Appstyle.contenttext,
-                    border: InputBorder.none),
+                  border: InputBorder.none,
+                  hintText: 'Title',
+                  hintStyle: Appstyle.titletext,
+                ),
+                controller: _titlecontroller,
+                style: Appstyle.titletext,
               ),
-            )
-          ],
+              SizedBox(
+                height: 2,
+              ),
+              Text(
+                'Edited ${DateFormat("dd MMM yyyy").format(DateTime.now())}',
+                style: TextStyle(fontSize: 13),
+              ),
+              SizedBox(height: 6),
+              Expanded(
+                child: TextField(
+                  maxLines: null,
+                  textCapitalization: TextCapitalization.sentences,
+                  controller: _notecontroller,
+                  decoration: InputDecoration(
+                      hintText: 'Note',
+                      hintStyle: Appstyle.contenttext,
+                      border: InputBorder.none),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void handlebackbutton() {
-    db.put(
-        note.key,
-        Note(
-            title: _titlecontroller.text.trim(),
-            content: _notecontroller.text,
-            colorIndex: note.colorIndex));
-    Navigator.pop(context);
+  handlebackbutton() {
+    if ((titletemp != _titlecontroller.text) ||
+        (contenttemp != _notecontroller.text)) {
+      db.put(
+          note.key,
+          Note(
+              title: _titlecontroller.text.trim(),
+              content: _notecontroller.text,
+              colorIndex: note.colorIndex,
+              datentime: DateTime.now()));
+      Navigator.pop(context);
+    } else {
+      Navigator.pop(context);
+    }
   }
 }

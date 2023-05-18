@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Appstyle {
-  static Color maincolor = Color.fromARGB(255, 20, 0, 46);
+  static Color maincolor = const Color.fromARGB(255, 20, 0, 46);
 
   Color getrandomcolor() {
     final random = Random();
@@ -19,6 +19,8 @@ class Appstyle {
     Colors.yellow.shade100,
     Colors.orange.shade100,
     Colors.pink.shade100,
+    Colors.cyan.shade100,
+    Colors.grey.shade100,
   ];
 
   static TextStyle maintext =

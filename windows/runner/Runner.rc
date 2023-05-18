@@ -89,11 +89,11 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
+            VALUE "CompanyName", "com.thaju" "\0"
             VALUE "FileDescription", "colornotes" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "colornotes" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2023 com.thaju. All rights reserved." "\0"
             VALUE "OriginalFilename", "colornotes.exe" "\0"
             VALUE "ProductName", "colornotes" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

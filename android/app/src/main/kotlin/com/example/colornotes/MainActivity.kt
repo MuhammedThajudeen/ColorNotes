@@ -1,4 +1,4 @@
-package com.example.colornotes
+package com.thaju.colornotes
 
 import io.flutter.embedding.android.FlutterActivity
 

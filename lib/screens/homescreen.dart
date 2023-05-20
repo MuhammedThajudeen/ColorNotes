@@ -59,7 +59,12 @@ class _HomescreenState extends State<Homescreen> {
             padding: const EdgeInsets.all(4),
             child: ValueListenableBuilder<Box<Note>>(
                 builder: (BuildContext context, Box<Note> box, Widget? child) {
-                  final notes = box.values.toList().cast<Note>();
+                  var notes = box.values.toList().cast<Note>();
+                  notes.sort(
+                    (a, b) {
+                      return b.datentime.compareTo(a.datentime);
+                    },
+                  );
                   if (db.keys.isEmpty) {
                     return Expanded(
                         child: Center(

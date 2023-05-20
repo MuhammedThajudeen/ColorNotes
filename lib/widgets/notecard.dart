@@ -42,7 +42,7 @@ class noteCard extends StatelessWidget {
               height: 3,
             ),
             Text(
-              DateFormat("dd MMM yyyy").format(DateTime.now()).toString(),
+              DateFormat("dd MMM yyyy").format(note.datentime),
               style: TextStyle(fontSize: 11.5),
             ),
             SizedBox(

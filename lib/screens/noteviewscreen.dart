@@ -106,7 +106,7 @@ class _NoteViewState extends State<NoteView> {
                 height: 2,
               ),
               Text(
-                'Edited ${DateFormat("dd MMM yyyy").format(DateTime.now())}',
+                'Edited ${DateFormat("dd MMM yyyy").format(note.datentime)}',
                 style: TextStyle(fontSize: 13),
               ),
               SizedBox(height: 6),
@@ -129,13 +129,13 @@ class _NoteViewState extends State<NoteView> {
   }
 
   handlebackbutton() {
-    if ((titletemp != _titlecontroller.text) ||
-        (contenttemp != _notecontroller.text)) {
+    if ((titletemp != _titlecontroller.text.trim()) ||
+        (contenttemp != _notecontroller.text.trim())) {
       db.put(
           note.key,
           Note(
               title: _titlecontroller.text.trim(),
-              content: _notecontroller.text,
+              content: _notecontroller.text.trim(),
               colorIndex: note.colorIndex,
               datentime: DateTime.now()));
       Navigator.pop(context);

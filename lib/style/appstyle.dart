@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -12,15 +14,22 @@ class Appstyle {
   }
 
   static List cardcolor = [
-    Colors.white,
-    Colors.blue.shade100,
-    Colors.green.shade100,
-    Colors.red.shade100,
-    Colors.yellow.shade100,
-    Colors.orange.shade100,
-    Colors.pink.shade100,
-    Colors.cyan.shade100,
-    Colors.grey.shade100,
+    Color(0xfff8c5d8),
+    Color(0xfff7a7aa),
+    Color(0xfffaf0bc),
+    Color(0xfff5f6cc),
+    Color(0xffd1e8cb),
+    Color(0xffeaf3de),
+    Color(0xffc5e7e9),
+    Color(0xff88d5f1),
+    Color(0xff76aedd),
+    Color(0xffd5cfe7),
+    Color(0xff9d93c7),
+    Color(0xffc6a7d0),
+    Color(0xffefdded),
+    Color(0xffd7a5cb),
+    Color(0xffe8c5dd),
+    Color(0xff81d0d4),
   ];
 
   static TextStyle maintext =

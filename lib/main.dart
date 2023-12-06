@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:colornotes/models/note.dart';
+import 'package:colornotes/providers/delete_flag.dart';
 import 'package:colornotes/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -21,8 +23,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Homescreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context)=> deleteflag())
+      ],
+      child: MaterialApp(
+        home: Homescreen(),
+      ),
     );
   }
 }

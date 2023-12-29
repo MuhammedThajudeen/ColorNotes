@@ -17,21 +17,51 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+bool isSelected = false;
+
   @override
   Widget build(BuildContext context) {
+    final deleteFlagProvider =
+                    Provider.of<deleteflag>(context, listen: false);
     return Scaffold(
         backgroundColor: Appstyle.maincolor,
         appBar: AppBar(
           actions: [
+            Consumer<deleteflag>(
+              builder: (BuildContext context, deleteflag value, Widget? child) { 
+                return Visibility(
+                visible: value.notekey.isNotEmpty,
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      isSelected = !isSelected;
+                    });
+                    if (isSelected == true) {
+                      for (int key in db.keys) {
+                        deleteFlagProvider.addnotekeylist(key);
+                        
+                      }
+                    }else{
+                      deleteFlagProvider.clearNoteKeyList();
+                    }
+                  },
+                  child: Icon(
+                    isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+                    // Add any other properties to customize the icon, such as size and color
+                    color: Colors.white,
+                  ),
+                ),
+              );
+               },
+              
+            ),
             IconButton(
               onPressed: () {
-                final deleteFlagProvider =
-                    Provider.of<deleteflag>(context, listen: false);
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: deleteFlagProvider.notekey.isEmpty
+                        title: deleteFlagProvider.notekey.isEmpty || isSelected
                             ? Text(
                                 'Delete all the Notes?',
                                 style: Appstyle.deletemsgtxtstyle,
@@ -65,6 +95,9 @@ class _HomescreenState extends State<Homescreen> {
                                       // Clear the flag list and note key list after deletion
                                       // deleteFlagProvider.clearFlagList();
                                       deleteFlagProvider.clearNoteKeyList();
+                                      setState(() {
+                                        isSelected = !isSelected;
+                                      });
 
                                       Navigator.pop(context);
                                       // deleteFlagProvider.flaglist.clear();
@@ -98,7 +131,8 @@ class _HomescreenState extends State<Homescreen> {
                     },
                   );
                   if (db.keys.isEmpty) {
-                    return Expanded(
+                    return Container(
+                      constraints: const BoxConstraints.expand(),
                         child: Center(
                             child: Text(
                       'No Notes',
@@ -116,7 +150,7 @@ class _HomescreenState extends State<Homescreen> {
                           children: [
                             Text(
                               'Your Recent Notes',
-                              style: GoogleFonts.roboto(
+                              style: GoogleFonts.poppins(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18),

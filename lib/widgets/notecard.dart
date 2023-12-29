@@ -22,6 +22,8 @@ class _noteCardState extends State<noteCard> {
     return Consumer<deleteflag>(
       builder: (BuildContext context, value, Widget? child) {
         return InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
           onLongPress: () {
             if (value.notekey.isEmpty) {
               setState(() {

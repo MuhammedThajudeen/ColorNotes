@@ -14,10 +14,12 @@ class deleteflag extends ChangeNotifier {
     _flag = newflag;
   }
   
-  // addflaglist (){
-  //   _flaglist.add(1);  
-  //   notifyListeners();
-  // }
+  addnotekeylist (int key){
+    if (!_notekey.contains(key)) {
+      _notekey.add(key);  
+      notifyListeners();
+    }
+  }
 
   // deleteflaglist (){
   //   _flaglist.removeLast();  

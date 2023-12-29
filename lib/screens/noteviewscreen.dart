@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, no_logic_in_create_state
-
 import 'package:colornotes/style/appstyle.dart';
 import 'package:flutter/material.dart';
 import 'package:colornotes/models/note.dart';
@@ -54,41 +52,44 @@ class _NoteViewState extends State<NoteView> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('Are you sure want to delete?'),
+                            title: Text(
+                              'Are you sure want to delete?',
+                              style: Appstyle.deletemsgtxtstyle,
+                            ),
                             actions: [
                               TextButton(
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Text('NO')),
+                                  child: Text('NO',style: Appstyle.deletemsgoptionstyle)),
                               TextButton(
                                   onPressed: () {
                                     db.delete(note.key);
                                     Navigator.pop(context);
                                     Navigator.pop(context);
                                   },
-                                  child: Text('YES'))
+                                  child: Text('YES',style: Appstyle.deletemsgoptionstyle))
                             ],
                           );
                         });
                   },
-                  icon: Icon(Icons.delete))
+                  icon: const Icon(Icons.delete))
             ],
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
                   handlebackbutton();
                 },
-                icon: Icon(Icons.arrow_back)),
+                icon: const Icon(Icons.arrow_back)),
             elevation: 5,
             backgroundColor: Appstyle.cardcolor[note.colorIndex],
-            iconTheme: IconThemeData(color: Colors.black),
+            iconTheme: const IconThemeData(color: Colors.black),
             title: Text(
               'Your Note',
-              style: TextStyle(color: Colors.black),
+              style: Appstyle.notescreenheadingtextstyle,
             )),
         body: Padding(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -102,14 +103,14 @@ class _NoteViewState extends State<NoteView> {
                 controller: _titlecontroller,
                 style: Appstyle.titletext,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 2,
               ),
               Text(
                 'Edited ${DateFormat("dd MMM yyyy").format(note.datentime)}',
-                style: TextStyle(fontSize: 13),
+                style: const TextStyle(fontSize: 13),
               ),
-              SizedBox(height: 6),
+              const SizedBox(height: 6),
               Expanded(
                 child: TextField(
                   maxLines: null,

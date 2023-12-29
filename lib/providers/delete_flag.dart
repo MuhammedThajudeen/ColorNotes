@@ -4,8 +4,8 @@ class deleteflag extends ChangeNotifier {
   int _flag=0;
   int get flag => _flag;
 
-  List <int>_flaglist =[];
-  List<int> get flaglist => _flaglist;
+  // List <int>_flaglist =[];
+  // List<int> get flaglist => _flaglist;
   
   List _notekey = [];
   List get notekey => _notekey;
@@ -14,25 +14,25 @@ class deleteflag extends ChangeNotifier {
     _flag = newflag;
   }
   
-  addflaglist (){
-    _flaglist.add(1);  
-    notifyListeners();
-  }
+  // addflaglist (){
+  //   _flaglist.add(1);  
+  //   notifyListeners();
+  // }
 
-  deleteflaglist (){
-    _flaglist.removeLast();  
-    notifyListeners();
-  }
+  // deleteflaglist (){
+  //   _flaglist.removeLast();  
+  //   notifyListeners();
+  // }
 
   notekeylist(int key) {
     _notekey.contains(key) ? _notekey.remove(key) : _notekey.add(key);
     notifyListeners();
   }
 
-  clearFlagList() {
-    _flaglist.clear();
-    notifyListeners();
-  }
+  // clearFlagList() {
+  //   _flaglist.clear();
+  //   notifyListeners();
+  // }
 
   clearNoteKeyList() {
     _notekey.clear();

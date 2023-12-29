@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, camel_case_types
 import 'package:colornotes/models/note.dart';
 import 'package:colornotes/providers/delete_flag.dart';
 import 'package:colornotes/screens/noteviewscreen.dart';
@@ -24,26 +23,28 @@ class _noteCardState extends State<noteCard> {
       builder: (BuildContext context, value, Widget? child) {
         return InkWell(
           onLongPress: () {
-            setState(() {
+            if (value.notekey.isEmpty) {
+              setState(() {
               flag = 1;
               // keylist.add(widget.note.colorIndex);
             });
-            value.addflaglist();
+            // value.addflaglist();
             value.notekeylist(widget.note.key);
+            }
           },
           onTap: () {
-            if (flag == 1 && value.flaglist.isNotEmpty) {
+            if (flag == 1 && value.notekey.isNotEmpty) {
               setState(() {
                 flag = 0;
               });
-              value.deleteflaglist();
+              // value.deleteflaglist();
               value.notekeylist(widget.note.key);
             } else {
-              if (value.flaglist.isNotEmpty) {
+              if (value.notekey.isNotEmpty) {
                 setState(() {
                   flag = 1;
                 });
-                value.addflaglist();
+                // value.addflaglist();
                 value.notekeylist(widget.note.key);
               } else {
                 Navigator.of(context).push(
@@ -58,8 +59,8 @@ class _noteCardState extends State<noteCard> {
             }
           },
           child: Container(
-            padding: EdgeInsets.all(8),
-            margin: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
             decoration: BoxDecoration(
                 color: Appstyle.cardcolor[widget.note.colorIndex],
                 borderRadius: BorderRadius.circular(12),
@@ -76,9 +77,9 @@ class _noteCardState extends State<noteCard> {
                   child: Consumer<deleteflag>(
                     builder: (BuildContext context, value, Widget? child) { 
                       return Visibility(
-                      visible: flag==1 && value.flaglist.isNotEmpty,
+                      visible: value.notekey.contains(widget.note.key),
                       child: Container(
-                        child: Icon(Icons.check_circle_rounded,color: Color.fromARGB(255, 0, 2, 0),size: 25,)));
+                        child: const Icon(Icons.check_circle_rounded,color: Color.fromARGB(255, 0, 2, 0),size: 25,)));
                      },
                      
                   ),
@@ -89,18 +90,18 @@ class _noteCardState extends State<noteCard> {
                 Text(widget.note.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 3,
                 ),
                 Text(
                   DateFormat("dd MMM yyyy").format(widget.note.datentime),
-                  style: TextStyle(fontSize: 11.5),
+                  style: const TextStyle(fontSize: 11.5),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 6,
                 ),
                 Text(

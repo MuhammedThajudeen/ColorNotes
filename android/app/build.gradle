@@ -53,11 +53,20 @@ android {
         versionName flutterVersionName
     }
 
+    signingConfigs {
+        release {
+            keyAlias 'alias_name'
+            keyPassword 'colornotes123'
+            storeFile file('/Users/muhammedthajudeen/Desktop/untitled folder/ColorNotes/keystore_name.keystore')
+            storePassword 'colornotes123'
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }

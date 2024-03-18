@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class deleteflag extends ChangeNotifier {
-  int _flag=0;
-  int get flag => _flag;
+  bool _isSelected=false;
+  bool get isSelected => _isSelected;
 
   // List <int>_flaglist =[];
   // List<int> get flaglist => _flaglist;
@@ -11,7 +11,7 @@ class deleteflag extends ChangeNotifier {
   List get notekey => _notekey;
 
   setnewflag(newflag){
-    _flag = newflag;
+    _isSelected = newflag;
   }
   
   addnotekeylist (int key){

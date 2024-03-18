@@ -114,9 +114,13 @@ bool isSelected = false;
           ],
           backgroundColor: Appstyle.maincolor,
           elevation: 5,
-          title: Text(
+          title: const Text(
             'Color.Notes',
-            style: Appstyle.maintext,
+            style: TextStyle(
+              fontFamily: 'DynaPuff',
+              fontSize: 20,
+              color: Colors.white
+            ),
           ),
           centerTitle: true,
         ),

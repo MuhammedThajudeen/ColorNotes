@@ -57,7 +57,7 @@ android {
         release {
             keyAlias 'alias_name'
             keyPassword 'colornotes123'
-            storeFile file('/Users/muhammedthajudeen/Desktop/untitled folder/ColorNotes/keystore_name.keystore')
+            storeFile file('/Users/muhammedthajudeen/Desktop/projects/ColorNotes/keystore_name.keystore')
             storePassword 'colornotes123'
         }
     }

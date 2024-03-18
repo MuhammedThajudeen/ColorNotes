@@ -17,7 +17,6 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
-bool isSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +32,8 @@ bool isSelected = false;
                 visible: value.notekey.isNotEmpty,
                 child: InkWell(
                   onTap: () {
-                    setState(() {
-                      isSelected = !isSelected;
-                    });
-                    if (isSelected == true) {
+                    value.setnewflag(!value.isSelected);
+                    if (value.isSelected == true) {
                       for (int key in db.keys) {
                         deleteFlagProvider.addnotekeylist(key);
                         
@@ -46,7 +43,7 @@ bool isSelected = false;
                     }
                   },
                   child: Icon(
-                    isSelected ? Icons.check_box : Icons.check_box_outline_blank,
+                    value.isSelected ? Icons.check_box : Icons.check_box_outline_blank,
                     // Add any other properties to customize the icon, such as size and color
                     color: Colors.white,
                   ),
@@ -55,61 +52,67 @@ bool isSelected = false;
                },
               
             ),
-            IconButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: deleteFlagProvider.notekey.isEmpty || isSelected
-                            ? Text(
-                                'Delete all the Notes?',
-                                style: Appstyle.deletemsgtxtstyle,
-                              )
-                            : Text('Delete the selected Notes?',
-                                style: Appstyle.deletemsgtxtstyle),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('NO',
-                                  style: Appstyle.deletemsgoptionstyle)),
-                          TextButton(
-                              onPressed: deleteFlagProvider.notekey.isEmpty
-                                  ? () {
-                                      db.deleteAll(db.keys);
-                                      Navigator.pop(context);
-                                    }
-                                  : () {
-                                      // Retrieve the list of selected note keys
-                                      final selectedNoteKeys =
-                                          deleteFlagProvider
-                                              .getSelectedNoteKeys();
-
-                                      // Delete the selected notes using their keys
-                                      for (var key in selectedNoteKeys) {
-                                        db.delete(key);
-                                      }
-
-                                      // Clear the flag list and note key list after deletion
-                                      // deleteFlagProvider.clearFlagList();
-                                      deleteFlagProvider.clearNoteKeyList();
-                                      setState(() {
-                                        isSelected = !isSelected;
-                                      });
-
-                                      Navigator.pop(context);
-                                      // deleteFlagProvider.flaglist.clear();
-                                    },
-                              child: Text('YES',
-                                  style: Appstyle.deletemsgoptionstyle))
-                        ],
-                      );
-                    });
+            Consumer<deleteflag>(
+              builder: (BuildContext context, deleteflag value, Widget? child) {
+                return IconButton(
+                  onPressed: () {
+                    value.notekey.isNotEmpty? showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: value.notekey.isEmpty ||
+                                    value.isSelected
+                                ? Text(
+                                    'Delete all the notes?',
+                                    style: Appstyle.deletemsgtxtstyle,
+                                  )
+                                : Text('Delete the selected notes?',
+                                    style: Appstyle.deletemsgtxtstyle),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('NO',
+                                      style: Appstyle.deletemsgoptionstyle)),
+                              TextButton(
+                                  onPressed: value
+                                          .notekey.isEmpty
+                                      ? () {
+                                          db.deleteAll(db.keys);
+                                          Navigator.pop(context);
+                                        }
+                                      : () {
+                                          // Retrieve the list of selected note keys
+                                          final selectedNoteKeys =
+                                              value
+                                                  .getSelectedNoteKeys();
+                
+                                          // Delete the selected notes using their keys
+                                          for (var key in selectedNoteKeys) {
+                                            db.delete(key);
+                                          }
+                
+                                          // Clear the flag list and note key list after deletion
+                                          // deleteFlagProvider.clearFlagList();
+                                          value
+                                              .clearNoteKeyList();
+                                          value.setnewflag(
+                                              !value.isSelected);
+                
+                                          Navigator.pop(context);
+                                          // deleteFlagProvider.flaglist.clear();
+                                        },
+                                  child: Text('YES',
+                                      style: Appstyle.deletemsgoptionstyle))
+                            ],
+                          );
+                        }) : null ;
+                  },
+                  icon: Icon(Icons.delete),
+                  color: value.notekey.isNotEmpty?Colors.white:Colors.grey,
+                );
               },
-              icon: Icon(Icons.delete),
-              color: Colors.white,
             )
           ],
           backgroundColor: Appstyle.maincolor,

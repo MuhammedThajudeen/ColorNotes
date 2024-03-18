@@ -33,6 +33,11 @@ class _noteCardState extends State<noteCard> {
             // value.addflaglist();
             value.notekeylist(widget.note.key);
             }
+            if (db.length == value.notekey.length) {
+              value.setnewflag(true);
+            }else{
+               value.setnewflag(false);
+            }
           },
           onTap: () {
             if (flag == 1 && value.notekey.isNotEmpty) {
@@ -58,6 +63,11 @@ class _noteCardState extends State<noteCard> {
                   ),
                 );
               }
+            }
+            if (db.length == value.notekey.length) {
+              value.setnewflag(true);
+            }else{
+              value.setnewflag(false);
             }
           },
           child: Container(
